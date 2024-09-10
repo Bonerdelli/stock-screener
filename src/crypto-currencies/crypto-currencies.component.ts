@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { CryptoService } from './crypto.service';
 
 @Component({
   selector: 'crypto-currencies',
-  templateUrl: './crypto-currencies.component.html'
+  templateUrl: './crypto-currencies.component.html',
+  standalone: true,
+  imports: [CommonModule],
 })
 export class CryptoCurrenciesComponent implements OnInit {
   data: any[] = []; // TODO: make typings
