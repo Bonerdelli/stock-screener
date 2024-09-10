@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CryptoCurrenciesComponent } from '../crypto-currencies';
+import { CryptoCurrenciesComponent } from './crypto-currencies';
 
 export const routes: Routes = [
   {
