@@ -14,14 +14,21 @@
     </tr>
   </thead>
   <tbody class="bg-white divide-y divide-gray-200">
-    <tr *ngFor="let item of data" class="hover:bg-gray-50 cursor-pointer">
+    <tr
+      *ngFor="let item of data"
+      class="hover:bg-gray-50 transition duration-500 ease-in-out cursor-pointer"
+      [ngClass]="{ 'bg-yellow-100': changedSymbols[item.symbol] }"
+    >
       <td class="px-6 py-4 whitespace-nowrap font-medium text-lg">{{ item.symbol }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono text-gray-500">{{ item.prevClosePrice | currency }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono text-gray-500">{{ item.openPrice | currency }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono font-medium">{{ item.lastPrice | currency }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono">{{ item.volume | number: '1.2-2' }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono">
-        <span [ngClass]="+item.priceChangePercent >= 0 ? 'text-green-500' : 'text-red-500'">{{ item.priceChangePercent }}%</span>
+        <span [ngClass]="{
+          'text-green-500': +item.priceChangePercent > 0,
+          'text-red-500': +item.priceChangePercent < 0
+        }">{{ item.priceChangePercent }}%</span>
       </td>
     </tr>
   </tbody>

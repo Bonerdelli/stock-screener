@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription, timer } from 'rxjs';
 
 import { BinanceService } from './binance.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
-import { Subscription } from 'rxjs';
+
 import { Ticker } from './binance.types';
 import { ErrorMessageComponent } from '../error-message/error-message.component';
 
@@ -15,7 +16,9 @@ import { ErrorMessageComponent } from '../error-message/error-message.component'
 })
 export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
   public filteredData: any[] = [];
+  public changedSymbols: Record<string, boolean> = {}
   public loading = true;
+
   private dataRaw: Ticker[] = [];
   private tickerSubscription?: Subscription;
   protected errorMessage: string = '';
@@ -43,11 +46,31 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
 
   public set data(data: Ticker[]) {
     const filteredData = data.filter(crypto => crypto.symbol.endsWith('USDT'));
-    this.dataRaw = filteredData;
-    this.loading = false;
+    if (this.dataRaw.length) {
+      this.applyDataChanges(data)
+    } else {
+      this.dataRaw = filteredData;
+      this.loading = false;
+    }
   }
 
-  private applyDataChanges(data: Ticker) {
+  protected applyDataChanges(newData: Ticker[]): void {
+    const updatedChangedSymbols: Record<string, boolean> = {}
+    for (let i = 0; i < newData.length; i++) {
+      const ticker = newData[i];
+      const existingTicketIndex = this.dataRaw.findIndex(item => item.symbol === ticker.symbol);
+      const existingTicket = this.dataRaw[existingTicketIndex];
+      if (!existingTicket || !this.isTickerChanged(ticker, existingTicket)) {
+        continue; // Pass if no changes
+      }
+      this.dataRaw[existingTicketIndex] = { ...ticker }
+      updatedChangedSymbols[ticker.symbol] = true;
+    }
+    this.changedSymbols = updatedChangedSymbols;
+    timer(1000).subscribe(() => this.changedSymbols = {});
+  }
 
+  protected isTickerChanged(a: Ticker, b: Ticker): boolean {
+    return a.lastPrice !== b.lastPrice || a.priceChangePercent !== b.priceChangePercent;
   }
 }
