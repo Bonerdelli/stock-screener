@@ -24,7 +24,7 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
   protected dataRaw: Ticker[] = [];
   protected activeFilters: TickerFilters = defaultFilters;
   protected tickerSubscription?: Subscription;
-  protected errorMessage: string = '';
+  protected errorMessage = '';
 
   constructor(private binanceService: BinanceService) {}
 

@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   templateUrl: './error-message.component.html',
 })
 export class ErrorMessageComponent {
-  @Input() message: string = 'An error occurred. Please try again later.';
+  @Input() message = 'An error occurred. Please try again later.';
 }

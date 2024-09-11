@@ -21,7 +21,7 @@ export const defaultFilters: TickerFilters = {
 export class FilterModalComponent {
   @Output() filtersApplied = new EventEmitter<TickerFilters>();
 
-  protected isVisible: boolean = false;
+  protected isVisible = false;
   protected filters: TickerFilters = { ...defaultFilters };
 
   get isFiltersActive(): boolean {
