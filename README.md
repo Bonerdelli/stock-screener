@@ -4,7 +4,7 @@ This demo project is an Angular-based application for a cryptocurrency stock scr
 
 ## Requirements
 
-- Node.js (v16.x or higher)
+- Node.js (v18.x or higher)
 - Angular CLI (v18.x or higher)
 
 ## Setup and Installation
