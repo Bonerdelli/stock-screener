@@ -1,2 +1,3 @@
 export { CryptoCurrenciesComponent } from './crypto-currencies.component'
-export { CryptoService } from './crypto.service'
+export { BinanceService } from './binance.service'
+export type { Ticker } from './binance.types'
