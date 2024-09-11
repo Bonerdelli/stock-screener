@@ -13,12 +13,20 @@ export class BinanceService {
   constructor(private http: HttpClient) {}
 
   getDailyTickersData(): Observable<Ticker[]> {
-    const url = `${this.baseUrl}/ticker/24hr?type=MINI`
+    const url = `${this.baseUrl}/ticker/24hr`;
     return this.http.get<Ticker[]>(url);
   }
 
+  getPeriodicDailyTickersData(
+    intervalMs: number = this.updatePeriodMs,
+  ): Observable<Ticker[]> {
+    return timer(0, intervalMs).pipe(
+      switchMap(() => this.getDailyTickersData())
+    );
+  }
+
   getTickerData(): Observable<Ticker[]> {
-    const url = `${this.baseUrl}/ticker?type=MINI`;
+    const url = `${this.baseUrl}/ticker`;
     return this.http.get<Ticker[]>(url);
   }
 

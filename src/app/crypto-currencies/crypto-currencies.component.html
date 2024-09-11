@@ -1,28 +1,31 @@
-<spinner *ngIf="loading" />
+<app-spinner *ngIf="loading" />
 <table *ngIf="!loading" class="min-w-full divide-y divide-gray-200">
   <thead class="bg-gray-100 dark:bg-gray-800 sticky top-0 z-10">
     <tr>
       <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Symbol</th>
+      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">Prev. Close Price</th>
+      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">Open Price</th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">
         <span>Price</span>
         <svg class="w-5 h-5 inline ml-1 text-blue-500 cursor-pointer" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M3.241,7.646L13,19v9l6-4v-5l9.759-11.354C29.315,6.996,28.848,6,27.986,6H4.014C3.152,6,2.685,6.996,3.241,7.646z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" /></svg>
       </th>
-      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">Prev. Close Price</th>
-      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">Open Price</th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">Volume</th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">Change (%)</th>
     </tr>
   </thead>
   <tbody class="bg-white divide-y divide-gray-200">
-    <tr *ngFor="let item of filteredData" class="hover:bg-gray-50 cursor-pointer">
+    <tr *ngFor="let item of data" class="hover:bg-gray-50 cursor-pointer">
       <td class="px-6 py-4 whitespace-nowrap font-medium text-lg">{{ item.symbol }}</td>
-      <td class="px-6 py-4 whitespace-nowrap text-right font-mono">{{ item.lastPrice | currency }}</td>
-      <td class="px-6 py-4 whitespace-nowrap text-right font-mono">{{ item.prevClosePrice | currency }}</td>
-      <td class="px-6 py-4 whitespace-nowrap text-right font-mono">{{ item.openPrice | currency }}</td>
+      <td class="px-6 py-4 whitespace-nowrap text-right font-mono text-gray-500">{{ item.prevClosePrice | currency }}</td>
+      <td class="px-6 py-4 whitespace-nowrap text-right font-mono text-gray-500">{{ item.openPrice | currency }}</td>
+      <td class="px-6 py-4 whitespace-nowrap text-right font-mono font-medium">{{ item.lastPrice | currency }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono">{{ item.volume | number: '1.2-2' }}</td>
       <td class="px-6 py-4 whitespace-nowrap text-right font-mono">
-        <span [ngClass]="item.priceChangePercent >= 0 ? 'text-green-500' : 'text-red-500'">{{ item.priceChangePercent }}%</span>
+        <span [ngClass]="+item.priceChangePercent >= 0 ? 'text-green-500' : 'text-red-500'">{{ item.priceChangePercent }}%</span>
       </td>
     </tr>
   </tbody>
 </table>
+<div *ngIf="errorMessage" class="m-3">
+  <app-error-message *ngIf="errorMessage" [message]="errorMessage" />
+</div>

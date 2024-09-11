@@ -5,25 +5,31 @@ import { BinanceService } from './binance.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { Subscription } from 'rxjs';
 import { Ticker } from './binance.types';
+import { ErrorMessageComponent } from '../error-message/error-message.component';
 
 @Component({
-  selector: 'crypto-currencies',
+  selector: 'app-crypto-currencies',
   templateUrl: './crypto-currencies.component.html',
   standalone: true,
-  imports: [CommonModule, SpinnerComponent],
+  imports: [CommonModule, SpinnerComponent, ErrorMessageComponent],
 })
 export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
   public filteredData: any[] = [];
   public loading = true;
   private dataRaw: Ticker[] = [];
   private tickerSubscription?: Subscription;
+  protected errorMessage: string = '';
 
   constructor(private binanceService: BinanceService) {}
 
   ngOnInit(): void {
-    this.tickerSubscription = this.binanceService.getPeriodicTickerData().subscribe({
+    this.tickerSubscription = this.binanceService.getPeriodicDailyTickersData().subscribe({
       next: (data) => this.data = data,
-      error: (err) => console.error('Error fetching tickers data:', err)
+      error: (err) => {
+        this.errorMessage = 'Failed to fetch data. Please try again later';
+        console.error('Error fetching ticker data:', err);
+        this.loading = false;
+      },
     });
   }
 
@@ -36,9 +42,12 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
   }
 
   public set data(data: Ticker[]) {
-    const filteredData = data.filter(crypto => crypto.symbol.includes('USDT'));
-    if (this.dataRaw?.length) {
-      this.dataRaw = filteredData;
-    }
+    const filteredData = data.filter(crypto => crypto.symbol.endsWith('USDT'));
+    this.dataRaw = filteredData;
+    this.loading = false;
+  }
+
+  private applyDataChanges(data: Ticker) {
+
   }
 }
