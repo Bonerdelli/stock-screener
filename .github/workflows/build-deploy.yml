@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: production-files
-        path: ./dist
+        path: ./dist/stock-screener/browser
 
   deploy:
     runs-on: ubuntu-latest
