@@ -1,0 +1,57 @@
+<div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" *ngIf="isVisible">
+  <div class="bg-white dark:bg-gray-800 w-96 rounded-lg p-6 shadow-lg">
+    <h3 class="text-xl font-semibold mb-4">Filter Options</h3>
+
+    <form (ngSubmit)="applyFilters()">
+      <!-- Trade Volume -->
+      <div class="mb-4">
+        <label for="volume" class="block text-gray-700 dark:text-gray-200">Volume</label>
+        <div class="flex space-x-2">
+          <input type="number" [(ngModel)]="filters.minVolume" name="minVolume"
+                 placeholder="Min" class="w-1/2 border p-2 rounded-l-lg focus:outline-none" />
+          <input type="number" [(ngModel)]="filters.maxVolume" name="maxVolume"
+                 placeholder="Max" class="w-1/2 border p-2 rounded-r-lg focus:outline-none" />
+        </div>
+      </div>
+
+      <!-- Price Change -->
+      <div class="mb-4">
+        <label for="priceChange" class="block text-gray-700 dark:text-gray-200">Price Change (%)</label>
+        <div class="flex space-x-2">
+          <input type="number" [(ngModel)]="filters.minPriceChange" name="minPriceChange"
+                 placeholder="Min" class="w-1/2 border p-2 rounded-l-lg focus:outline-none" />
+          <input type="number" [(ngModel)]="filters.maxPriceChange" name="maxPriceChange"
+                 placeholder="Max" class="w-1/2 border p-2 rounded-r-lg focus:outline-none" />
+        </div>
+      </div>
+
+      <!-- Price Range -->
+      <div class="mb-4">
+        <label for="priceRange" class="block text-gray-700 dark:text-gray-200">Price</label>
+        <div class="flex space-x-2">
+          <input type="number" [(ngModel)]="filters.minPrice" name="minPrice"
+                 placeholder="Min" class="w-1/2 border p-2 rounded-l-lg focus:outline-none" />
+          <input type="number" [(ngModel)]="filters.maxPrice" name="maxPrice"
+                 placeholder="Max" class="w-1/2 border p-2 rounded-r-lg focus:outline-none" />
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end space-x-2 mt-6">
+        <button type="button" (click)="closeModal()"
+                class="bg-gray-100 px-4 py-2 rounded-lg focus:outline-none hover:bg-gray-200">
+          Cancel
+        </button>
+
+        <button type="submit"
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg focus:outline-none hover:bg-blue-600">
+          Apply
+        </button>
+        <button *ngIf="isFiltersActive" (click)="clearFilters()"
+                class="bg-gray-500 text-white px-4 py-2 rounded-lg focus:outline-none hover:bg-gray-600">
+          Clear
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

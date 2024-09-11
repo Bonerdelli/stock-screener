@@ -7,10 +7,22 @@
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">Open Price</th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">
         <span>Price</span>
-        <svg class="w-5 h-5 inline ml-1 text-blue-500 cursor-pointer" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M3.241,7.646L13,19v9l6-4v-5l9.759-11.354C29.315,6.996,28.848,6,27.986,6H4.014C3.152,6,2.685,6.996,3.241,7.646z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" /></svg>
+        <span (click)="openFilterModal()" class="ml-1 cursor-pointer">
+          <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isPriceFilterActive }" />
+        </span>
       </th>
-      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">Volume</th>
-      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">Change (%)</th>
+      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+        <span>Volume</span>
+        <span (click)="openFilterModal()" class="ml-1 cursor-pointer">
+          <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isVolumeFilterActive }" />
+        </span>
+      </th>
+      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+        <span>Change (%)</span>
+        <span (click)="openFilterModal()" class="ml-1 cursor-pointer">
+          <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isPriceChangeFilterActive }" />
+        </span>
+      </th>
     </tr>
   </thead>
   <tbody class="bg-white divide-y divide-gray-200">
@@ -33,6 +45,15 @@
     </tr>
   </tbody>
 </table>
+
 <div *ngIf="errorMessage" class="m-3">
   <app-error-message *ngIf="errorMessage" [message]="errorMessage" />
 </div>
+
+<app-filter-modal (filtersApplied)="applyFilters($event)" />
+
+<ng-template #filterIcon let-filled="filled" let-lessonsCounter="estimate">
+  <svg class="w-5 h-5 inline text-blue-500" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <path d="M3.241,7.646L13,19v9l6-4v-5l9.759-11.354C29.315,6.996,28.848,6,27.986,6H4.014C3.152,6,2.685,6.996,3.241,7.646z" [attr.fill]="filled ? 'currentColor' : 'none'" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" />
+  </svg>
+</ng-template>

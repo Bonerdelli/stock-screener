@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription, timer } from 'rxjs';
 
@@ -7,23 +7,28 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 
 import { Ticker } from './binance.types';
 import { ErrorMessageComponent } from '../error-message/error-message.component';
+import { defaultFilters, FilterModalComponent } from './filter-modal/filter-modal.component';
+import { TickerFilters } from './crypto-currencies.types';
 
 @Component({
   selector: 'app-crypto-currencies',
   templateUrl: './crypto-currencies.component.html',
   standalone: true,
-  imports: [CommonModule, SpinnerComponent, ErrorMessageComponent],
+  imports: [CommonModule, SpinnerComponent, ErrorMessageComponent, FilterModalComponent],
 })
 export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
   public filteredData: any[] = [];
   public changedSymbols: Record<string, boolean> = {}
   public loading = true;
 
-  private dataRaw: Ticker[] = [];
-  private tickerSubscription?: Subscription;
+  protected dataRaw: Ticker[] = [];
+  protected activeFilters: TickerFilters = defaultFilters;
+  protected tickerSubscription?: Subscription;
   protected errorMessage: string = '';
 
   constructor(private binanceService: BinanceService) {}
+
+  @ViewChild(FilterModalComponent) filterModal: FilterModalComponent | null = null;
 
   ngOnInit(): void {
     this.tickerSubscription = this.binanceService.getPeriodicDailyTickersData().subscribe({
@@ -41,7 +46,15 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
   }
 
   public get data(): Ticker[] {
-    return this.dataRaw.filter(item => Boolean(item)); // TODO: make filterable
+    const filters = this.activeFilters;
+    return this.dataRaw.filter(item => (
+      (filters.minVolume == null || Number(item.volume) >= filters.minVolume) &&
+      (filters.maxVolume == null || Number(item.volume) <= filters.maxVolume) &&
+      (filters.minPriceChange == null || Number(item.priceChangePercent) >= filters.minPriceChange) &&
+      (filters.maxPriceChange == null || Number(item.priceChangePercent) <= filters.maxPriceChange) &&
+      (filters.minPrice == null || Number(item.lastPrice) >= filters.minPrice) &&
+      (filters.maxPrice == null || Number(item.lastPrice) <= filters.maxPrice)
+    ));
   }
 
   public set data(data: Ticker[]) {
@@ -52,6 +65,14 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
       this.dataRaw = filteredData;
       this.loading = false;
     }
+  }
+
+  openFilterModal() {
+    this.filterModal?.openModal();
+  }
+
+  applyFilters(filters: TickerFilters) {
+    this.activeFilters = filters;
   }
 
   protected applyDataChanges(newData: Ticker[]): void {
