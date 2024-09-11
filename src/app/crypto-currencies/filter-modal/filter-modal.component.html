@@ -1,4 +1,4 @@
-<div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" *ngIf="isVisible">
+<div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" aria-modal="true" *ngIf="isVisible">
   <div class="bg-white dark:bg-gray-800 w-96 rounded-lg p-6 shadow-lg">
     <h3 class="text-xl font-semibold mb-4">Filter Options</h3>
 
@@ -40,16 +40,15 @@
       <div class="flex justify-end space-x-2 mt-6">
         <button type="button" (click)="closeModal()"
                 class="bg-gray-100 px-4 py-2 rounded-lg focus:outline-none hover:bg-gray-200">
-          Cancel
+          Close
         </button>
-
+        <button type="submit" (click)="clearFilters()"
+                class="bg-gray-500 text-white px-4 py-2 rounded-lg focus:outline-none hover:bg-gray-600">
+          Clear
+        </button>
         <button type="submit"
                 class="bg-blue-500 text-white px-4 py-2 rounded-lg focus:outline-none hover:bg-blue-600">
           Apply
-        </button>
-        <button *ngIf="isFiltersActive" (click)="clearFilters()"
-                class="bg-gray-500 text-white px-4 py-2 rounded-lg focus:outline-none hover:bg-gray-600">
-          Clear
         </button>
       </div>
     </form>

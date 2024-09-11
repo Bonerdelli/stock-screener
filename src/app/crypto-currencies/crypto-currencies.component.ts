@@ -17,11 +17,10 @@ import { TickerFilters } from './crypto-currencies.types';
   imports: [CommonModule, SpinnerComponent, ErrorMessageComponent, FilterModalComponent],
 })
 export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
-  public filteredData: any[] = [];
-  public changedSymbols: Record<string, boolean> = {}
   public loading = true;
 
   protected dataRaw: Ticker[] = [];
+  protected changedSymbols: Record<string, boolean> = {}
   protected activeFilters: TickerFilters = defaultFilters;
   protected tickerSubscription?: Subscription;
   protected errorMessage = '';
@@ -77,8 +76,7 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
 
   protected applyDataChanges(newData: Ticker[]): void {
     const updatedChangedSymbols: Record<string, boolean> = {}
-    for (let i = 0; i < newData.length; i++) {
-      const ticker = newData[i];
+    for (const ticker of newData) {
       const existingTicketIndex = this.dataRaw.findIndex(item => item.symbol === ticker.symbol);
       const existingTicket = this.dataRaw[existingTicketIndex];
       if (!existingTicket || !this.isTickerChanged(ticker, existingTicket)) {
