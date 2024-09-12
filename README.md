@@ -7,6 +7,12 @@ This demo project is an Angular-based application for a cryptocurrency stock scr
 - Node.js (v18.x or higher)
 - Angular CLI (v18.x or higher)
 
+## Known limitations
+
+- Only modern browsers are supported
+- No localization support
+- No test coverage
+
 ## Setup and Installation
 
 1. Clone the repository:
@@ -29,10 +35,6 @@ ng serve
 ```
 
 The app will be available at http://localhost:4200
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
