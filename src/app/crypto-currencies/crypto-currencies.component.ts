@@ -66,8 +66,8 @@ export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
     }
   }
 
-  openFilterModal() {
-    this.filterModal?.openModal();
+  openFilterModal(focusOn: string) {
+    this.filterModal?.openModal(focusOn);
   }
 
   applyFilters(filters: TickerFilters) {

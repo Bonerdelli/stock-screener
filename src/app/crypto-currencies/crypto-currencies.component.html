@@ -7,19 +7,28 @@
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">Open Price</th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase w-30">
         <span>Price</span>
-        <button role="button" tab-index="1" aria-label="Filter" (click)="openFilterModal()" (keypress)="openFilterModal()" class="ml-1 inline cursor-pointer">
+        <button
+          role="button" tab-index="1" aria-label="Filter" class="ml-1 inline cursor-pointer"
+          (click)="openFilterModal('price')" (keypress)="openFilterModal('minVolume')"
+        >
           <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isPriceFilterActive }" />
         </button>
       </th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
         <span>Volume</span>
-        <button role="button" tab-index="2" aria-label="Filter" (click)="openFilterModal()" (keypress)="openFilterModal()" class="ml-1 inline cursor-pointer">
+        <button
+          role="button" tab-index="2" aria-label="Filter" class="ml-1 inline cursor-pointer"
+          (click)="openFilterModal('volume')" (keypress)="openFilterModal('minPriceChange')"
+        >
           <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isVolumeFilterActive }" />
         </button>
       </th>
       <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
         <span>Change (%)</span>
-        <button role="button" tab-index="3" aria-label="Filter" (click)="openFilterModal()" (keypress)="openFilterModal()" class="ml-1 inline cursor-pointer">
+        <button
+          role="button" tab-index="3" aria-label="Filter" class="ml-1 inline cursor-pointer"
+          (click)="openFilterModal('priceChange')" (keypress)="openFilterModal('minPrice')"
+        >
           <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isPriceChangeFilterActive }" />
         </button>
       </th>
@@ -50,7 +59,7 @@
   <app-error-message *ngIf="errorMessage" [message]="errorMessage" />
 </div>
 
-<app-filter-modal (filtersApplied)="applyFilters($event)" />
+<app-filter-modal (filtersApplied)="applyFilters($event)" [foundCount]="data.length" />
 
 <ng-template #filterIcon let-filled="filled" let-lessonsCounter="estimate">
   <svg class="w-5 h-5 inline text-blue-500" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
