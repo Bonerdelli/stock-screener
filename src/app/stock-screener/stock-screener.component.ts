@@ -96,7 +96,7 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
       if (!existingTicket || !this.isTickerChanged(ticker, existingTicket)) {
         continue; // Pass if no changes
       }
-      this.rawData[existingTicketIndex] = { ...ticker }
+      this.data[existingTicketIndex] = this.tickerToDto(ticker)
       updatedChangedSymbols[ticker.symbol] = true;
     }
     this.changedSymbols = updatedChangedSymbols;
