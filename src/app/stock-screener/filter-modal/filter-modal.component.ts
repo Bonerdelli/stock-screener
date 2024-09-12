@@ -19,7 +19,7 @@ export const defaultFilters: TickerFilters = {
   templateUrl: './filter-modal.component.html',
 })
 export class FilterModalComponent {
-  @Input() foundCount: number = 0;
+  @Input() foundCount = 0;
   @Output() filtersApplied = new EventEmitter<TickerFilters>();
 
   @ViewChild('minVolume', { static: false })
