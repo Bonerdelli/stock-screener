@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 import { Subscription, timer } from 'rxjs';
 
 import { BinanceService } from './binance.service';
-import { SpinnerComponent } from '../spinner/spinner.component';
+import { SpinnerComponent } from '../shared/spinner/spinner.component';
 
 import { Ticker } from './binance.types';
-import { ErrorMessageComponent } from '../error-message/error-message.component';
+import { ErrorMessageComponent } from '../shared/error-message/error-message.component';
 import { defaultFilters, FilterModalComponent } from './filter-modal/filter-modal.component';
-import { TickerFilters } from './crypto-currencies.types';
+import { TickerFilters } from './stock-screener.types';
 
 @Component({
-  selector: 'app-crypto-currencies',
-  templateUrl: './crypto-currencies.component.html',
+  selector: 'app-stock-screener',
+  templateUrl: './stock-screener.component.html',
   standalone: true,
   imports: [CommonModule, SpinnerComponent, ErrorMessageComponent, FilterModalComponent],
 })
-export class CryptoCurrenciesComponent implements OnInit, OnDestroy {
+export class StockScreenerComponent implements OnInit, OnDestroy {
   public loading = true;
 
   protected dataRaw: Ticker[] = [];

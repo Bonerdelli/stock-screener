@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { TickerFilters } from '../crypto-currencies.types';
+import { TickerFilters } from '../stock-screener.types';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { CryptoCurrenciesComponent } from './crypto-currencies';
+import { StockScreenerComponent } from './stock-screener';
 
 export const routes: Routes = [
   {
-    component: CryptoCurrenciesComponent,
+    component: StockScreenerComponent,
     path: '',
   }
 ];
