@@ -20,6 +20,7 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
   public loading = true;
 
   protected data: TickerDto[] = [];
+  protected rawData: Ticker[] = [];
   protected changedSymbols: Record<string, boolean> = {}
   protected activeFilters: TickerFilters = defaultFilters;
   protected tickerSubscription?: Subscription;
@@ -31,7 +32,7 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.tickerSubscription = this.binanceService.getPeriodicDailyTickersData().subscribe({
-      next: (data) => this.dataRaw = data,
+      next: (data) => this.updateRawData(data),
       error: (err) => {
         this.errorMessage = 'Failed to fetch data. Please try again later';
         console.error('Error fetching ticker data:', err);
@@ -56,23 +57,24 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
     ));
   }
 
-  public set dataRaw(dataRaw: Ticker[]) {
-    // NOTE: we can't filter this on API side, because it's not supported so many option for `symbols` param
-    const filteredData = dataRaw.filter(crypto => crypto.symbol.endsWith('USDT'));
-    if (this.data.length) {
-      this.applyDataChanges(filteredData)
-    } else {
-      this.data = filteredData.map(this.tickerToDto);
-      this.loading = false;
-    }
-  }
-
   openFilterModal(focusOn: string) {
     this.filterModal?.openModal(focusOn);
   }
 
   applyFilters(filters: TickerFilters) {
     this.activeFilters = filters;
+  }
+
+  protected updateRawData(rawData: Ticker[]) {
+    // NOTE: we can't filter this on API side, because it's not supported so many option for `symbols` param
+    const filteredData = rawData.filter(crypto => crypto.symbol.endsWith('USDT'));
+    if (this.data.length) {
+      this.applyDataChanges(filteredData)
+    } else {
+      this.data = filteredData.map(this.tickerToDto);
+      this.loading = false;
+    }
+    this.rawData = rawData;
   }
 
   protected tickerToDto(item: Ticker): TickerDto {
@@ -89,12 +91,12 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
   protected applyDataChanges(newData: Ticker[]): void {
     const updatedChangedSymbols: Record<string, boolean> = {}
     for (const ticker of newData) {
-      const existingTicketIndex = this.dataRaw.findIndex(item => item.symbol === ticker.symbol);
-      const existingTicket = this.dataRaw[existingTicketIndex];
+      const existingTicketIndex = this.rawData.findIndex(item => item.symbol === ticker.symbol);
+      const existingTicket = this.rawData[existingTicketIndex];
       if (!existingTicket || !this.isTickerChanged(ticker, existingTicket)) {
         continue; // Pass if no changes
       }
-      this.dataRaw[existingTicketIndex] = { ...ticker }
+      this.rawData[existingTicketIndex] = { ...ticker }
       updatedChangedSymbols[ticker.symbol] = true;
     }
     this.changedSymbols = updatedChangedSymbols;
