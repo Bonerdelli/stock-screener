@@ -8,7 +8,7 @@ import { SpinnerComponent } from '../shared/spinner/spinner.component';
 import { Ticker } from './binance.types';
 import { ErrorMessageComponent } from '../shared/error-message/error-message.component';
 import { defaultFilters, FilterModalComponent } from './filter-modal/filter-modal.component';
-import { TickerFilters } from './stock-screener.types';
+import { TickerDto, TickerFilters } from './stock-screener.types';
 
 @Component({
   selector: 'app-stock-screener',
@@ -19,7 +19,7 @@ import { TickerFilters } from './stock-screener.types';
 export class StockScreenerComponent implements OnInit, OnDestroy {
   public loading = true;
 
-  protected dataRaw: Ticker[] = [];
+  protected data: TickerDto[] = [];
   protected changedSymbols: Record<string, boolean> = {}
   protected activeFilters: TickerFilters = defaultFilters;
   protected tickerSubscription?: Subscription;
@@ -31,7 +31,7 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.tickerSubscription = this.binanceService.getPeriodicDailyTickersData().subscribe({
-      next: (data) => this.data = data,
+      next: (data) => this.dataRaw = data,
       error: (err) => {
         this.errorMessage = 'Failed to fetch data. Please try again later';
         console.error('Error fetching ticker data:', err);
@@ -44,24 +44,25 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
     this.tickerSubscription?.unsubscribe();
   }
 
-  public get data(): Ticker[] {
+  public get filteredData(): TickerDto[] {
     const filters = this.activeFilters;
-    return this.dataRaw.filter(item => (
-      (filters.minVolume == null || Number(item.volume) >= filters.minVolume) &&
-      (filters.maxVolume == null || Number(item.volume) <= filters.maxVolume) &&
-      (filters.minPriceChange == null || Number(item.priceChangePercent) >= filters.minPriceChange) &&
-      (filters.maxPriceChange == null || Number(item.priceChangePercent) <= filters.maxPriceChange) &&
-      (filters.minPrice == null || Number(item.lastPrice) >= filters.minPrice) &&
-      (filters.maxPrice == null || Number(item.lastPrice) <= filters.maxPrice)
+    return this.data.filter(item => (
+      (filters.minVolume == null || item.volume >= filters.minVolume) &&
+      (filters.maxVolume == null || item.volume <= filters.maxVolume) &&
+      (filters.minPriceChange == null || item.priceChangePercent >= filters.minPriceChange) &&
+      (filters.maxPriceChange == null || item.priceChangePercent <= filters.maxPriceChange) &&
+      (filters.minPrice == null || item.lastPrice >= filters.minPrice) &&
+      (filters.maxPrice == null || item.lastPrice <= filters.maxPrice)
     ));
   }
 
-  public set data(data: Ticker[]) {
-    const filteredData = data.filter(crypto => crypto.symbol.endsWith('USDT'));
-    if (this.dataRaw.length) {
-      this.applyDataChanges(data)
+  public set dataRaw(dataRaw: Ticker[]) {
+    // NOTE: we can't filter this on API side, because it's not supported so many option for `symbols` param
+    const filteredData = dataRaw.filter(crypto => crypto.symbol.endsWith('USDT'));
+    if (this.data.length) {
+      this.applyDataChanges(filteredData)
     } else {
-      this.dataRaw = filteredData;
+      this.data = filteredData.map(this.tickerToDto);
       this.loading = false;
     }
   }
@@ -72,6 +73,17 @@ export class StockScreenerComponent implements OnInit, OnDestroy {
 
   applyFilters(filters: TickerFilters) {
     this.activeFilters = filters;
+  }
+
+  protected tickerToDto(item: Ticker): TickerDto {
+    return {
+      symbol: item.symbol,
+      lastPrice: Number(item.lastPrice),
+      priceChangePercent: Number(item.priceChangePercent),
+      prevClosePrice: Number(item.prevClosePrice),
+      openPrice: Number(item.openPrice),
+      volume: Number(item.volume),
+    }
   }
 
   protected applyDataChanges(newData: Ticker[]): void {

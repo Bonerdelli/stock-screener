@@ -6,3 +6,12 @@ export interface TickerFilters {
   minPrice: number | null;
   maxPrice: number | null;
 }
+
+export interface TickerDto {
+  symbol: string;
+  lastPrice: number;
+  priceChangePercent: number;
+  prevClosePrice: number;
+  openPrice: number;
+  volume: number;
+}

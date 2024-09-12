@@ -36,7 +36,7 @@
   </thead>
   <tbody class="bg-white divide-y divide-gray-200">
     <tr
-      *ngFor="let item of data"
+      *ngFor="let item of filteredData"
       class="hover:bg-gray-50 transition duration-500 ease-in-out cursor-pointer"
       [ngClass]="{ 'bg-yellow-100': changedSymbols[item.symbol] }"
     >
@@ -59,7 +59,7 @@
   <app-error-message *ngIf="errorMessage" [message]="errorMessage" />
 </div>
 
-<app-filter-modal (filtersApplied)="applyFilters($event)" [foundCount]="data.length" />
+<app-filter-modal (filtersApplied)="applyFilters($event)" [foundCount]="filteredData.length" />
 
 <ng-template #filterIcon let-filled="filled" let-lessonsCounter="estimate">
   <svg class="w-5 h-5 inline text-blue-500" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
