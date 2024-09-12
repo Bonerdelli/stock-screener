@@ -30,7 +30,7 @@ jobs:
     - name: Upload artifact to enable deployment
       uses: actions/upload-artifact@v3
       with:
-        name: production-files
+        name: production-files-2
         path: ./dist/stock-screener/browser
 
   deploy:
@@ -44,7 +44,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: production-files
+          name: production-files-2
           path: ./dist
 
       - name: Deploy to GitHub Pages
