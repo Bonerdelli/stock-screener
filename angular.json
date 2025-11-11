@@ -87,7 +87,26 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "**/*.spec.ts",
+              "**/*.module.ts",
+              "**/main.ts",
+              "**/app.config.ts",
+              "**/app.routes.ts",
+              "**/index.ts",
+              "**/*.types.ts",
+              "**/*.d.ts"
+            ],
+            "browsers": "ChromeHeadless"
+          },
+          "configurations": {
+            "ci": {
+              "progress": false,
+              "watch": false,
+              "browsers": "ChromeHeadless"
+            }
           }
         },
         "lint": {

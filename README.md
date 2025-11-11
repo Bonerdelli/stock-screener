@@ -1,7 +1,7 @@
 # Stock Screener Application
 
-This demo project is an Angular-based application for a cryptocurrency stock screener
-See task description in TASK.md.
+This is cryptocurrency stock screener, Angular-based Demo project. See task description in TASK.md.
+The final version is deployed here: https://bonerdelli.github.io/stock-screener/
 
 ## Requirements
 
@@ -12,7 +12,6 @@ See task description in TASK.md.
 
 - Only modern browsers are supported
 - No localization support
-- No test coverage
 
 ## Setup and Installation
 
