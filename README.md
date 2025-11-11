@@ -1,6 +1,7 @@
 # Stock Screener Application
 
-This demo project is an Angular-based application for a cryptocurrency stock screener.
+This demo project is an Angular-based application for a cryptocurrency stock screener
+See task description in TASK.md.
 
 ## Requirements
 
@@ -39,6 +40,18 @@ The app will be available at http://localhost:4200
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Deployment
+
+The application is automatically built and deployed to GitHub Pages using GitHub Actions.
+
+### Local Build for Production
+
+To build the project for production locally:
+
+```bash
+ng build --configuration production
+```
 
 ## Further help
 
