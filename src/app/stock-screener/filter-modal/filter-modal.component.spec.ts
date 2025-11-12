@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { fakeAsync, tick } from '@angular/core/testing';
 

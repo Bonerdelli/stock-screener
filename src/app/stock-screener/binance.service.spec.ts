@@ -111,7 +111,7 @@ describe('BinanceService', () => {
     it('should return tickers data periodically', fakeAsync(() => {
       let callCount = 0;
       const intervalMs = 100;
-      let subscription = service
+      const subscription = service
         .getPeriodicDailyTickersData(intervalMs)
         .subscribe((data) => {
           callCount++;
@@ -143,7 +143,7 @@ describe('BinanceService', () => {
 
     it('should use default interval if not provided', fakeAsync(() => {
       let callCount = 0;
-      let subscription = service
+      const subscription = service
         .getPeriodicDailyTickersData()
         .subscribe((data) => {
           callCount++;
@@ -178,7 +178,7 @@ describe('BinanceService', () => {
     it('should return ticker data periodically', fakeAsync(() => {
       let callCount = 0;
       const intervalMs = 100;
-      let subscription = service
+      const subscription = service
         .getPeriodicTickerData(intervalMs)
         .subscribe((data) => {
           callCount++;
@@ -202,7 +202,7 @@ describe('BinanceService', () => {
 
     it('should use default interval if not provided', fakeAsync(() => {
       let callCount = 0;
-      let subscription = service.getPeriodicTickerData().subscribe((data) => {
+      const subscription = service.getPeriodicTickerData().subscribe((data) => {
         callCount++;
         expect(data).toEqual(mockTickers);
       });

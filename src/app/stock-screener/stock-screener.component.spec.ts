@@ -6,8 +6,7 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { StockScreenerComponent } from './stock-screener.component';
 import { BinanceService } from './binance.service';
 import { Ticker } from './binance.types';
-import { TickerDto, TickerFilters } from './stock-screener.types';
-import { FilterModalComponent } from './filter-modal/filter-modal.component';
+import { TickerFilters } from './stock-screener.types';
 
 describe('StockScreenerComponent', () => {
   let component: StockScreenerComponent;
