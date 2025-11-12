@@ -8,9 +8,8 @@ describe('SpinnerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpinnerComponent]
-    })
-    .compileComponents();
+      imports: [SpinnerComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SpinnerComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,11 @@ describe('SpinnerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render spinner element', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const spinner = compiled.querySelector('.animate-spin');
+    expect(spinner).toBeTruthy();
   });
 });
