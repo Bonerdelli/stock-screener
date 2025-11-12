@@ -3,13 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [BrowserModule, CommonModule, FormsModule],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

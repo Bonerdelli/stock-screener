@@ -8,7 +8,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
   standalone: true,
   imports: [RouterOutlet, CommonModule, SpinnerComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'Stock Screener Application';

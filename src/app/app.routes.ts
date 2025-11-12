@@ -5,5 +5,5 @@ export const routes: Routes = [
   {
     component: StockScreenerComponent,
     path: '',
-  }
+  },
 ];

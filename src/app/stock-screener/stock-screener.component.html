@@ -2,34 +2,85 @@
 <table *ngIf="!loading" class="min-w-full divide-y divide-gray-200">
   <thead class="bg-gray-100 dark:bg-gray-800 sticky top-0">
     <tr>
-      <th scope="col" class="px-2 py-1 md:px-6 md:py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-24 sm:w-auto">Symbol</th>
-      <th scope="col" class="hidden lg:table-cell px-2 py-1 md:px-6 md:py-3 text-right text-xs font-medium text-gray-700 uppercase md:w-30">Prev. Close Price</th>
-      <th scope="col" class="hidden md:table-cell px-2 py-1 md:px-6 md:py-3 text-right text-xs font-medium text-gray-700 uppercase md:w-30">Open Price</th>
-      <th scope="col" class="px-2 py-1 md:px-6 md:py-3 text-right text-xs font-medium text-gray-700 uppercase md:w-30">
+      <th
+        scope="col"
+        class="px-2 py-1 md:px-6 md:py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-24 sm:w-auto"
+      >
+        Symbol
+      </th>
+      <th
+        scope="col"
+        class="hidden lg:table-cell px-2 py-1 md:px-6 md:py-3 text-right text-xs font-medium text-gray-700 uppercase md:w-30"
+      >
+        Prev. Close Price
+      </th>
+      <th
+        scope="col"
+        class="hidden md:table-cell px-2 py-1 md:px-6 md:py-3 text-right text-xs font-medium text-gray-700 uppercase md:w-30"
+      >
+        Open Price
+      </th>
+      <th
+        scope="col"
+        class="px-2 py-1 md:px-6 md:py-3 text-right text-xs font-medium text-gray-700 uppercase md:w-30"
+      >
         <span>Price</span>
         <button
-          role="button" tab-index="1" aria-label="Filter" class="ml-1 inline cursor-pointer"
-          (click)="openFilterModal('price')" (keypress)="openFilterModal('minVolume')"
+          role="button"
+          tab-index="1"
+          aria-label="Filter"
+          class="ml-1 inline cursor-pointer"
+          (click)="openFilterModal('price')"
+          (keypress)="openFilterModal('minVolume')"
         >
-          <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isPriceFilterActive }" />
+          <ng-container
+            *ngTemplateOutlet="
+              filterIcon;
+              context: { filled: filterModal?.isPriceFilterActive }
+            "
+          />
         </button>
       </th>
-      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider w-24 sm:w-auto">
+      <th
+        scope="col"
+        class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider w-24 sm:w-auto"
+      >
         <span>Volume</span>
         <button
-          role="button" tab-index="2" aria-label="Filter" class="ml-1 inline cursor-pointer"
-          (click)="openFilterModal('volume')" (keypress)="openFilterModal('minPriceChange')"
+          role="button"
+          tab-index="2"
+          aria-label="Filter"
+          class="ml-1 inline cursor-pointer"
+          (click)="openFilterModal('volume')"
+          (keypress)="openFilterModal('minPriceChange')"
         >
-          <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isVolumeFilterActive }" />
+          <ng-container
+            *ngTemplateOutlet="
+              filterIcon;
+              context: { filled: filterModal?.isVolumeFilterActive }
+            "
+          />
         </button>
       </th>
-      <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider w-16 sm:w-auto">
+      <th
+        scope="col"
+        class="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider w-16 sm:w-auto"
+      >
         <span>Change (%)</span>
         <button
-          role="button" tab-index="3" aria-label="Filter" class="ml-1 inline cursor-pointer"
-          (click)="openFilterModal('priceChange')" (keypress)="openFilterModal('minPrice')"
+          role="button"
+          tab-index="3"
+          aria-label="Filter"
+          class="ml-1 inline cursor-pointer"
+          (click)="openFilterModal('priceChange')"
+          (keypress)="openFilterModal('minPrice')"
         >
-          <ng-container *ngTemplateOutlet="filterIcon; context: { filled: filterModal?.isPriceChangeFilterActive }" />
+          <ng-container
+            *ngTemplateOutlet="
+              filterIcon;
+              context: { filled: filterModal?.isPriceChangeFilterActive }
+            "
+          />
         </button>
       </th>
     </tr>
@@ -42,29 +93,47 @@
     >
       <td class="px-2 py-1 md:px-6 md:py-4 whitespace-nowrap">
         <div class="max-w-16 sm:max-w-none truncate" title="{{ item.symbol }}">
-          <span class="font-medium text-xs sm:text-sm lg:text-lg md:text-lg">{{ item.symbol }}</span>
+          <span class="font-medium text-xs sm:text-sm lg:text-lg md:text-lg">{{
+            item.symbol
+          }}</span>
         </div>
       </td>
-      <td class="hidden lg:table-cell px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right">
-        <span class="font-mono text-xs sm:text-sm lg:text-lg text-gray-500">{{ item.prevClosePrice | currency }}</span>
+      <td
+        class="hidden lg:table-cell px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right"
+      >
+        <span class="font-mono text-xs sm:text-sm lg:text-lg text-gray-500">{{
+          item.prevClosePrice | currency
+        }}</span>
       </td>
-      <td class="hidden md:table-cell px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right">
-        <span class="font-mono text-xs sm:text-sm lg:text-lg text-gray-500">{{ item.openPrice | currency }}</span>
+      <td
+        class="hidden md:table-cell px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right"
+      >
+        <span class="font-mono text-xs sm:text-sm lg:text-lg text-gray-500">{{
+          item.openPrice | currency
+        }}</span>
       </td>
       <td class="px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right">
-        <span class="font-mono text-xs sm:text-sm lg:text-lg font-medium">{{ item.lastPrice | currency }}</span>
+        <span class="font-mono text-xs sm:text-sm lg:text-lg font-medium">{{
+          item.lastPrice | currency
+        }}</span>
       </td>
       <td class="px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right">
         <div class="max-w-28 sm:max-w-none truncate">
-          <span class="font-mono text-xs sm:text-sm lg:text-lg">{{ item.volume | number: '1.2-2' }}</span>
+          <span class="font-mono text-xs sm:text-sm lg:text-lg">{{
+            item.volume | number: '1.2-2'
+          }}</span>
         </div>
       </td>
       <td class="px-2 py-1 md:px-6 md:py-4 whitespace-nowrap text-right">
         <div class="max-w-14 sm:max-w-none truncate">
-          <span class="font-mono text-xs sm:text-sm lg:text-lg" [ngClass]="{
-            'text-green-500': +item.priceChangePercent > 0,
-            'text-red-500': +item.priceChangePercent < 0
-          }">{{ item.priceChangePercent }}%</span>
+          <span
+            class="font-mono text-xs sm:text-sm lg:text-lg"
+            [ngClass]="{
+              'text-green-500': +item.priceChangePercent > 0,
+              'text-red-500': +item.priceChangePercent < 0,
+            }"
+            >{{ item.priceChangePercent }}%</span
+          >
         </div>
       </td>
     </tr>
@@ -75,10 +144,28 @@
   <app-error-message *ngIf="errorMessage" [message]="errorMessage" />
 </div>
 
-<app-filter-modal (filtersApplied)="applyFilters($event)" [foundCount]="filteredData.length" />
+<app-filter-modal
+  (filtersApplied)="applyFilters($event)"
+  [foundCount]="filteredData.length"
+/>
 
 <ng-template #filterIcon let-filled="filled" let-lessonsCounter="estimate">
-  <svg class="w-5 h-5 inline text-blue-500" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <path d="M3.241,7.646L13,19v9l6-4v-5l9.759-11.354C29.315,6.996,28.848,6,27.986,6H4.014C3.152,6,2.685,6.996,3.241,7.646z" [attr.fill]="filled ? 'currentColor' : 'none'" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" />
+  <svg
+    class="w-5 h-5 inline text-blue-500"
+    version="1.1"
+    viewBox="0 0 32 32"
+    xml:space="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+    <path
+      d="M3.241,7.646L13,19v9l6-4v-5l9.759-11.354C29.315,6.996,28.848,6,27.986,6H4.014C3.152,6,2.685,6.996,3.241,7.646z"
+      [attr.fill]="filled ? 'currentColor' : 'none'"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-miterlimit="10"
+      stroke-width="3"
+    />
   </svg>
 </ng-template>

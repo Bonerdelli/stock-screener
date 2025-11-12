@@ -1,4 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { TickerFilters } from '../stock-screener.types';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -9,7 +16,7 @@ export const defaultFilters: TickerFilters = {
   minPriceChange: null,
   maxPriceChange: null,
   minPrice: null,
-  maxPrice: null
+  maxPrice: null,
 };
 
 @Component({
@@ -43,19 +50,26 @@ export class FilterModalComponent {
   }
 
   get isFiltersActive(): boolean {
-    return this.isPriceFilterActive || this.isVolumeFilterActive || this.isPriceChangeFilterActive
+    return (
+      this.isPriceFilterActive ||
+      this.isVolumeFilterActive ||
+      this.isPriceChangeFilterActive
+    );
   }
 
   get isPriceFilterActive(): boolean {
-    return Boolean(this.filters.minPrice) || Boolean(this.filters.maxPrice)
+    return Boolean(this.filters.minPrice) || Boolean(this.filters.maxPrice);
   }
 
   get isVolumeFilterActive(): boolean {
-    return Boolean(this.filters.minVolume) || Boolean(this.filters.maxVolume)
+    return Boolean(this.filters.minVolume) || Boolean(this.filters.maxVolume);
   }
 
   get isPriceChangeFilterActive(): boolean {
-    return Boolean(this.filters.minPriceChange) || Boolean(this.filters.maxPriceChange)
+    return (
+      Boolean(this.filters.minPriceChange) ||
+      Boolean(this.filters.maxPriceChange)
+    );
   }
 
   openModal(focusOn?: string) {
@@ -70,13 +84,13 @@ export class FilterModalComponent {
   protected focusOnInput(focusOn?: string) {
     switch (focusOn) {
       case 'volume':
-        this.minVolumeElement?.nativeElement.focus()
+        this.minVolumeElement?.nativeElement.focus();
         break;
       case 'priceChange':
-        this.minPriceChangeElement?.nativeElement.focus()
+        this.minPriceChangeElement?.nativeElement.focus();
         break;
       case 'price':
-        this.minPriceElement?.nativeElement.focus()
+        this.minPriceElement?.nativeElement.focus();
         break;
       default:
         break;

@@ -4,11 +4,11 @@ import { Observable, switchMap, timer } from 'rxjs';
 import { Ticker } from './binance.types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BinanceService {
   private baseUrl = 'https://api.binance.com/api/v3';
-  private updatePeriodMs = 5000 // in milliseconds
+  private updatePeriodMs = 5000; // in milliseconds
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class BinanceService {
   }
 
   getPeriodicDailyTickersData(
-    intervalMs: number = this.updatePeriodMs,
+    intervalMs: number = this.updatePeriodMs
   ): Observable<Ticker[]> {
     return timer(0, intervalMs).pipe(
       switchMap(() => this.getDailyTickersData())
@@ -31,11 +31,8 @@ export class BinanceService {
   }
 
   getPeriodicTickerData(
-    intervalMs: number = this.updatePeriodMs,
+    intervalMs: number = this.updatePeriodMs
   ): Observable<Ticker[]> {
-    return timer(0, intervalMs).pipe(
-      switchMap(() => this.getTickerData())
-    );
+    return timer(0, intervalMs).pipe(switchMap(() => this.getTickerData()));
   }
-
 }
