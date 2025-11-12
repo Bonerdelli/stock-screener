@@ -71,32 +71,17 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": [{ "glob": "**/*", "input": "public" }],
             "styles": ["src/styles.css"],
             "scripts": [],
             "codeCoverage": true,
-            "codeCoverageExclude": [
-              "**/*.spec.ts",
-              "**/*.module.ts",
-              "**/main.ts",
-              "**/app.config.ts",
-              "**/app.routes.ts",
-              "**/index.ts",
-              "**/*.types.ts",
-              "**/*.d.ts"
-            ],
             "browsers": "ChromeHeadless"
           },
           "configurations": {
             "ci": {
               "progress": false,
               "watch": false,
-              "browsers": "ChromeHeadless"
+              "browsers": "ChromeHeadlessNoSandbox"
             }
           }
         },
